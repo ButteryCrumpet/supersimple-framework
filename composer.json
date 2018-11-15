@@ -1,0 +1,31 @@
+{
+    "name": "butterycrumpet/supersimple-framework",
+    "description": "A super simple web app framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ButteryCrumpet",
+            "email": "crumpetybumpety@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SuperSimpleFramework\\": "src"
+        }
+    },
+    "require": {
+        "butterycrumpet/supersimple-di-resolver": "^0.0.2",
+        "butterycrumpet/supersimple-logger": "^0.1.0",
+        "butterycrumpet/supersimple-response-emitter": "^0.0.3",
+        "butterycrumpet/supersimple-requesthandler": "^0.0.2",
+        "butterycrumpet/supersimple-routing": "^0.1.0",
+        "butterycrumpet/supersimpledi": "^0.9.0",
+        "butterycrumpet/supersimple-kernel": "^0.0.2",
+        "guzzlehttp/psr7": "^1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4",
+        "phpstan/phpstan": "^0.10.5"
+    }
+}
