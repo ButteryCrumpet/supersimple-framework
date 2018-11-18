@@ -19,8 +19,7 @@ class AppTest extends TestCase
         $response = $this->createResponse($this->createBody(), []);
 
         $app = new App();
-        $router = $app->router();
-        $router->get("/post", function (\Psr\Http\Message\ServerRequestInterface $r) use ($request, $response) {
+        $app->get("/post", function (\Psr\Http\Message\ServerRequestInterface $r) use ($request, $response) {
            $this->assertEquals($request, $r);
            return $response;
         });
@@ -33,8 +32,7 @@ class AppTest extends TestCase
         $response = $this->createResponse($this->createBody(), []);
 
         $app = new App();
-        $router = $app->router();
-        $router->group("/{name}", function ($group) use ($request, $response) {
+        $app->group("/{name}", function ($group) use ($request, $response) {
            $group->get("/{id}", function ($r, $name, $id) use ($request, $response) {
                $this->assertEquals($request, $r);
                $this->assertEquals("post", $name);
@@ -53,13 +51,12 @@ class AppTest extends TestCase
         $middleware->method("process")
             ->willReturnCallback(function($request, $handler) {
                 $this->assertEquals("/post/5", $request->getUri()->getPath());
-                $response = $handler->handle($request);
+                $handler->handle($request);
                 return $this->createResponse($this->createBody("second body."), []);
             });
 
         $app = new App();
-        $router = $app->router();
-        $router->group("/{name}", function ($group) use ($request, $response) {
+        $app->group("/{name}", function ($group) use ($request, $response) {
             $group->get("/{id}", function ($r, $name, $id) use ($request, $response) {
                 $this->assertEquals($request, $r);
                 $this->assertEquals("post", $name);
@@ -83,8 +80,7 @@ class AppTest extends TestCase
         $app->register("service", function () use ($response) {
           return new TestHandler($this, $response);
         });
-        $router = $app->router();
-        $router->group("/{name}", function ($group) {
+        $app->group("/{name}", function ($group) {
             $group->get("/{id}", "service:method");
         });
         $app->run($request);
@@ -99,8 +95,7 @@ class AppTest extends TestCase
         $app->register(TestHandler::class, function () use ($response) {
             return new TestHandler($this, $response);
         });
-        $router = $app->router();
-        $router->group("/{name}", function ($group) {
+        $app->group("/{name}", function ($group) {
             $group->get("/{id}", TestHandler::class.":method");
         });
         $app->run($request);
@@ -112,8 +107,7 @@ class AppTest extends TestCase
         $response = $this->createResponse($this->createBody(), []);
 
         $app = new App();
-        $router = $app->router();
-        $router->group("/post", function ($group) use ($request, $response) {
+        $app->group("/post", function ($group) use ($request, $response) {
             $group->get("/{id}", function () use ($request, $response) {
                 return $response;
             });

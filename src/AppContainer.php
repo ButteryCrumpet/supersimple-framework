@@ -21,8 +21,8 @@ class AppContainer extends Container
             return new Resolver($c);
         });
 
-        $this->register(EmitterInterface::class, function () {
-            return new Emitter();
+        $this->register(EmitterInterface::class, function (Container $c) {
+            return new Emitter($c->get("ChunkSize"));
         });
 
         $this->register(RouterInterface::class, function (Container $c) {
@@ -44,5 +44,7 @@ class AppContainer extends Container
                 return new Response(401);
             });
         });
+
+        $this->register("ChunkSize", 4096);
     }
 }

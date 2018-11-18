@@ -15,7 +15,7 @@ class ClosureWrapper implements MiddlewareInterface
     public function __construct(\Closure $closure, array $args)
     {
         $this->closure = $closure;
-        $this->args = $args;
+        $this->args = array_values($args);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

@@ -17,8 +17,9 @@ class App
     public function __construct(ContainerInterface $container = null)
     {
         $this->container = is_null($container) ? new AppContainer() : $container;
+        $this->router = $this->container->get(RouterInterface::class);
         $this->kernel = new Kernel(
-            $this->container->get(RouterInterface::class),
+            $this->router,
             $this->container->get(EmitterInterface::class)
         );
     }
@@ -39,9 +40,33 @@ class App
         return $this->container->get($name);
     }
 
-
-    public function router()
+    public function get($path, $handler)
     {
-        return $this->container->get(RouterInterface::class);
+        return $this->router->get($path, $handler);
+    }
+
+    public function post($path, $handler)
+    {
+        return $this->router->post($path, $handler);
+    }
+
+    public function any($path, $handler)
+    {
+        return $this->router->any($path, $handler);
+    }
+
+    public function route($methods, $path, $handler)
+    {
+        return $this->router->route($methods, $path, $handler);
+    }
+
+    public function group($path, $callback)
+    {
+        return $this->router->group($path, $callback);
+    }
+
+    public function with($middleware)
+    {
+        return $this->router->with($middleware);
     }
 }

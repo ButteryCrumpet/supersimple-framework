@@ -46,7 +46,7 @@ class HandlerFactory implements HandlerFactoryInterface
         } elseif (is_string($handler)) {
             $split = explode(":", $handler);
             $resolved = $this->resolver->resolve($split[0]);
-            $method = isset($split[1]) ? $split[1] : "__invoke";
+            $method = isset($split[1]) ? $split[1] : "__invoke"; // eh
             return new MethodWrapper($resolved, $method, $args);
         }
         throw new \InvalidArgumentException("A handler must be either a closure, an invokable class or a class:method string.");
