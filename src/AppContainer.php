@@ -4,8 +4,6 @@ namespace SuperSimpleFramework;
 
 use GuzzleHttp\Psr7\Response;
 use SuperSimpleDI\Container;
-use SuperSimpleDIResolver\Resolver;
-use SuperSimpleDIResolver\ResolverInterface;
 use SuperSimpleKernel\EmitterInterface;
 use SuperSimpleKernel\RouterInterface;
 use SuperSimpleRouting\HandlerFactoryInterface;
@@ -16,10 +14,10 @@ class AppContainer extends Container
     public function __construct()
     {
         $this->register(HandlerFactoryInterface::class, function (Container $c) {
-            return new HandlerFactory($c->get(ResolverInterface::class));
+            return new HandlerFactory($c->get("resolver"));
         });
 
-        $this->register(ResolverInterface::class, function(Container $c) {
+        $this->register("resolver", function(Container $c) {
             return new Resolver($c);
         });
 

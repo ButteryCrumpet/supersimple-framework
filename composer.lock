@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b412356d44c57fbcbba446c66d84fdcd",
+    "content-hash": "5177ce7ad494b5848c256f53a7d4e589",
     "packages": [
         {
             "name": "butterycrumpet/supersimple-di-resolver",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ButteryCrumpet/supersimple-diresolver.git",
-                "reference": "35231fefaec16ef82efc7ae310f799b93d5f8164"
+                "reference": "9e009523685501294dc143d541063bca90089736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ButteryCrumpet/supersimple-diresolver/zipball/35231fefaec16ef82efc7ae310f799b93d5f8164",
-                "reference": "35231fefaec16ef82efc7ae310f799b93d5f8164",
+                "url": "https://api.github.com/repos/ButteryCrumpet/supersimple-diresolver/zipball/9e009523685501294dc143d541063bca90089736",
+                "reference": "9e009523685501294dc143d541063bca90089736",
                 "shasum": ""
             },
             "require": {
@@ -44,7 +44,7 @@
                 }
             ],
             "description": "A dependency injection resolver for psr-11 containers",
-            "time": "2018-11-15T07:59:47+00:00"
+            "time": "2018-11-18T01:01:51+00:00"
         },
         {
             "name": "butterycrumpet/supersimple-kernel",

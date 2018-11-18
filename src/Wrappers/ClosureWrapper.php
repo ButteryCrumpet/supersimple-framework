@@ -1,6 +1,6 @@
 <?php
 
-namespace SuperSimpleFramework;
+namespace SuperSimpleFramework\Wrappers;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

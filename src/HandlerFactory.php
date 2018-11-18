@@ -4,7 +4,9 @@ namespace SuperSimpleFramework;
 
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use SuperSimpleDIResolver\ResolverInterface;
+use SuperSimpleFramework\Interfaces\ResolverInterface;
+use SuperSimpleFramework\Wrappers\ClosureWrapper;
+use SuperSimpleFramework\Wrappers\MethodWrapper;
 use SuperSimpleRequestHandler\Handler;
 use SuperSimpleRouting\HandlerFactoryInterface;
 
@@ -12,7 +14,7 @@ class HandlerFactory implements HandlerFactoryInterface
 {
     private $resolver;
 
-    public function __construct($resolver)
+    public function __construct(ResolverInterface $resolver)
     {
         $this->resolver = $resolver;
     }
@@ -32,12 +34,12 @@ class HandlerFactory implements HandlerFactoryInterface
            }
            return $resolved;
         }, $middleware);
-        $resolvedMiddleware[] = $this->getController($handler, $args);
+        $resolvedMiddleware[] = $this->wrapHandler($handler, $args);
 
         return new Handler($resolvedMiddleware);
     }
 
-    private function getController($handler, $args)
+    private function wrapHandler($handler, $args)
     {
         if ($handler instanceof \Closure) {
             return new ClosureWrapper($handler, $args);
@@ -47,6 +49,6 @@ class HandlerFactory implements HandlerFactoryInterface
             $method = isset($split[1]) ? $split[1] : "__invoke";
             return new MethodWrapper($resolved, $method, $args);
         }
-        throw new \InvalidArgumentException("A handler must be either a closure, and invokable class or a class:method string.");
+        throw new \InvalidArgumentException("A handler must be either a closure, an invokable class or a class:method string.");
     }
 }

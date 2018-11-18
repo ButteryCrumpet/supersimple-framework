@@ -1,10 +1,10 @@
 <?php
 
-namespace SuperSimpleFramework;
+namespace SuperSimpleFramework\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-trait RequestAwareTrait
+trait RequestAware
 {
     private $request;
 

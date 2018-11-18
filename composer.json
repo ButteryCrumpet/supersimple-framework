@@ -15,7 +15,7 @@
         }
     },
     "require": {
-        "butterycrumpet/supersimple-di-resolver": "^0.0.2",
+        "butterycrumpet/supersimple-di-resolver": "^0.0.3",
         "butterycrumpet/supersimple-logger": "^0.1.0",
         "butterycrumpet/supersimple-response-emitter": "^0.0.3",
         "butterycrumpet/supersimple-requesthandler": "^0.0.2",

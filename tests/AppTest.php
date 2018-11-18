@@ -121,7 +121,7 @@ class AppTest extends TestCase
         ob_start();
         $app->run($request);
         $output = ob_get_clean();
-        $this->assertEquals("the\nbody.", $output);
+        $this->assertEquals("the\nbody", $output);
     }
 
     private function createUri($path)

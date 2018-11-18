@@ -1,6 +1,6 @@
 <?php
 
-namespace SuperSimpleFramework;
+namespace SuperSimpleFramework\Interfaces;
 
 interface ResolverInterface
 {
