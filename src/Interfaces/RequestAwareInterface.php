@@ -4,7 +4,7 @@ namespace SuperSimpleFramework;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface RequestAware
+interface RequestAwareInterface
 {
     public function setRequest(ServerRequestInterface $request);
 }

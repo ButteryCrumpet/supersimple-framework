@@ -13,16 +13,16 @@ class MethodWrapper implements MiddlewareInterface
     private $method;
     private $args;
 
-    public function __construct($class, $method, $args)
+    public function __construct($class, $method, array $args)
     {
         $this->class = $class;
         $this->method = $method;
-        $this->args = $args;
+        $this->args = array_values($args);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->class instanceof RequestAware)
+        if ($this->class instanceof RequestAwareInterface)
         {
             $this->class->setRequest($request);
         }
