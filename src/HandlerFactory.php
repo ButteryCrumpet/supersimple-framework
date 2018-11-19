@@ -5,6 +5,7 @@ namespace SuperSimpleFramework;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SuperSimpleFramework\Interfaces\ResolverInterface;
+use SuperSimpleFramework\Interfaces\RouteArgsAwareInterface;
 use SuperSimpleFramework\Wrappers\ClosureWrapper;
 use SuperSimpleFramework\Wrappers\MethodWrapper;
 use SuperSimpleRequestHandler\Handler;
@@ -21,16 +22,10 @@ class HandlerFactory implements HandlerFactoryInterface
 
     public function make($handler, array $args, array $middleware): RequestHandlerInterface
     {
-        $resolvedMiddleware = array_map(function ($middleware) {
-            if ($middleware instanceof MiddlewareInterface) {
-                return $middleware;
-            }
-           $resolved = $this->resolver->resolve($middleware);
-           if (!($resolved instanceof MiddlewareInterface)) {
-               throw new \InvalidArgumentException(sprintf(
-                   "Middleware must be or resolve to Psr\Http\Server\MiddlewareInterface. %s was given",
-                   gettype($resolved) === "object" ? get_class($resolved) : gettype($resolved)
-               ));
+        $resolvedMiddleware = array_map(function ($middleware) use ($args) {
+            $resolved = $this->resolveMiddleware($middleware);
+           if ($resolved instanceof RouteArgsAwareInterface) {
+               $resolved->setRouteArgs($args);
            }
            return $resolved;
         }, $middleware);
@@ -50,5 +45,19 @@ class HandlerFactory implements HandlerFactoryInterface
             return new MethodWrapper($resolved, $method, $args);
         }
         throw new \InvalidArgumentException("A handler must be either a closure, an invokable class or a class:method string.");
+    }
+
+    private function resolveMiddleware($middleware) {
+        if ($middleware instanceof MiddlewareInterface) {
+            return $middleware;
+        }
+        $resolved = $this->resolver->resolve($middleware);
+        if (!($resolved instanceof MiddlewareInterface)) {
+            throw new \InvalidArgumentException(sprintf(
+                "Middleware must be or resolve to Psr\Http\Server\MiddlewareInterface. %s was given",
+                gettype($resolved) === "object" ? get_class($resolved) : gettype($resolved)
+            ));
+        }
+        return $resolved;
     }
 }
